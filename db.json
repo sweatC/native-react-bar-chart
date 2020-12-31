@@ -1,0 +1,11 @@
+{
+  "data": [
+    { "name": "Facebook",  "value": 67 },
+    { "name": "YouTube",   "value": 55 },
+    { "name": "Instagram", "value": 41 },
+    { "name": "Qzone",     "value": 30 },
+    { "name": "Weibo",     "value": 25 },
+    { "name": "Twitter",   "value": 20 },
+    { "name": "Reddit",    "value": 18 }
+  ]
+}

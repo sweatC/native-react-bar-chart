@@ -1,6 +1,7 @@
+import { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import BarGroup from './BarGroup';
-import { BAR_HEIGHT } from './constants';
+import { BAR_HEIGHT, API_URL } from './constants';
 
 const useStyles = createUseStyles({
   '@global': {
@@ -48,23 +49,22 @@ const useStyles = createUseStyles({
 
 function BarChart() {
   const classes = useStyles();
-  const state = {
-    data: [
-      { name: 'Facebook',  value: 67 },
-      { name: 'YouTube',   value: 55 },
-      { name: 'Instagram', value: 41 },
-      { name: 'Qzone',     value: 30 },
-      { name: 'Weibo',     value: 25 },
-      { name: 'Twitter',   value: 20 },
-      { name: 'Reddit',    value: 18 }
-    ]
-  };
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch(API_URL)
+      .then(response => response.json())
+      .then(data => setData(data));
+  }, []);
 
-  const barGroups = state.data.map((d, i) => <g transform={`translate(0, ${i * BAR_HEIGHT})`}>
-                                                  <BarGroup d={d} barHeight={BAR_HEIGHT} classes={classes} />
-                                                </g>)
+  const barGroups = data?.map((d, i) => {
+    return (
+      <g key={i} transform={`translate(0, ${i * BAR_HEIGHT})`}>
+        <BarGroup d={d} barHeight={BAR_HEIGHT} classes={classes} />
+      </g>
+    )
+  })
 
-  return(
+  return (
     <svg width="800" height="300">
       <g className={classes.container}>
         <text className={classes.title} x="10" y="30">Most Popular Social Networking Sites</text>
